@@ -12,10 +12,12 @@ For each class listed in the UML file, a header file (.hpp) and implementation f
 
 ## UML Example Format
 
+~~~
 class MyClass {
 +publicFunction(int) : string
 -privateMember : int
 }
+~~~
 
 Default constructors and destructors do not have to be specified, and are taken into account to avoid duplicates if included. If parameter names exist, they will be included in the final code files.
 
