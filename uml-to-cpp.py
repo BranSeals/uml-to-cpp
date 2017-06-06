@@ -12,11 +12,11 @@ uml = [] # pull UML into memory as string list, 1 line per element
 
 # for each in uml list:
     # if first 4 = "class" and ends in {:
-        # create new object with className (use same variable to reset prev object)
+        # create new object with className (will reset previous one)
     # if +, obj.addToPublic(uml[current])
     # if -, obj.addToPrivate(uml[current])
-    # if neither, obj.addToPrivate(uml[current]) and print message
     # if }:
         # obj.build()
         # create name.hpp file and write using hpp list
         # create name.cpp file and write using cpp list
+    # if none of above, print error

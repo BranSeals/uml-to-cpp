@@ -1,3 +1,6 @@
+# Copyright (C) 2017 Bran Seals. All rights reserved.
+# Created: 2017-06-06
+
 class UmlClass:
     def __init__(self, className):
         self.name = className
@@ -31,12 +34,12 @@ class UmlClass:
         self.hppPrivate.append(privMember)
 
     #def isFunction(self): # looks for function syntax
-                       # used when creating cpp file from hpp list
+                           # used when creating cpp file from hpp list
 
     #def checkForLibs(self): # include libraries for data types that need them
 
     #def formatFunc(self): # formats function from hpp to cpp style
-                       # also takes into account return type and variable names
+                           # also takes into account return type and variable names
 
     #def buildHpp(self): # builds hpp using information
         # find index of "{" in hpp
