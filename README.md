@@ -19,7 +19,7 @@ class MyClass {
 }
 ~~~
 
-Default constructors and destructors do not have to be specified, and are taken into account to avoid duplicates if included. If parameter names exist, they will be included in the final code files.
+Default constructors and destructors do not have to be specified, and are taken into account to avoid duplicates if included. If parameter names exist, they will be included in the final code files. Currently, relationships and inheritance are not supported.
 
 ## Author
 
