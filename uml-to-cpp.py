@@ -12,6 +12,8 @@ classList = [] # list of classes that will be created, along with members
 noteList = [] # if weird things happen, this list will show potential errors
               # will be displayed after files are created for user info
 
+# DECISION: create classList or just iterate through uml list?
+
 # for each in uml list:
     # get class name
     # while } not reached:
@@ -21,12 +23,6 @@ noteList = [] # if weird things happen, this list will show potential errors
     # use these to create UmlClass object and append to classList
 
 # for each in classList:
-    # build hpp list using hpp, hppPublic, hppPrivate
-    # checkForLibs()
-    # for each in hpp list:
-        # if isFunction, append to functions list
-    # for each in functions list:
-        # format function and append to cpp list
     # create name.hpp file and write using hpp list
     # create name.cpp file and write using cpp list
     # remove object from classList?
@@ -36,6 +32,8 @@ class UmlClass:
         self.name = className
         self.hppPublic = list(hppPub)
         self.hppPrivate = list(hppPriv)
+        # buildHpp()
+        # buildCpp()
 
     functions = [] # list of functions used to build cpp file
     hpp = [] # will contain final hpp template, built from hppPub, hppPriv
@@ -48,3 +46,7 @@ class UmlClass:
 
     #def formatFunc(): # formats function from hpp to cpp style
                        # also takes into account return type and variable names
+
+    #def buildHpp(): # builds hpp using information
+
+    #def buildCpp(): # builds cpp using information
