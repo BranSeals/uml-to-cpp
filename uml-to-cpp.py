@@ -5,14 +5,14 @@ print("== UML to CPP ==")
 print("Create or modify C++ header and implementation files by plaintext UML.")
 #print("Enter a UML filename: ") # file import currently disabled
 # check if file isn't too bonkers
-#uml = [] # pull UML into memory as string list
+#uml = [] # pull UML into memory as string list, 1 line per element
 # check if file is properly formatted
 
 classList = [] # list of classes that will be created, along with members
 noteList = [] # if weird things happen, this list will show potential errors
               # will be displayed after files are created for user info
 
-# while uml list items exist:
+# for each in uml list:
     # get class name
     # while } not reached:
         # if +, put into hppPub
@@ -23,9 +23,9 @@ noteList = [] # if weird things happen, this list will show potential errors
 # for each in classList:
     # build hpp list using hpp, hppPublic, hppPrivate
     # checkForLibs()
-    # while hpp list item exists:
+    # for each in hpp list:
         # if isFunction, append to functions list
-    # while functions list item exists:
+    # for each in functions list:
         # format function and append to cpp list
     # create name.hpp file and write using hpp list
     # create name.cpp file and write using cpp list
