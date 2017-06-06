@@ -4,7 +4,9 @@
 
 I'm tired of manually creating C++ class UML, header, and implementation files from scratch. Over multiple academic and personal projects, I was spending more time than I needed to create these files and fill them with the same starting code. The information contained in a UML is enough to automatically generate these files.
 
-This project requires a plaintext file containing a UML diagram of classes. The format of this file matches [PlantText](https://www.planttext.com/) as I use this for my personal projects, but this formatting is subject to change as more features are added to this project.
+This project takes a plaintext UML file as input and uses it to create .hpp and .cpp files for each listed class. Each class's functions are taken into account along with parameters and return type and a basic code template is written into these files.
+
+The format of the plaintext UML file matches [PlantText](https://www.planttext.com/) as I use this for my personal projects, but this formatting is subject to change as more features are added to this project.
 
 ## Operation
 
