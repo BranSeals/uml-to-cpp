@@ -13,7 +13,7 @@ noteList = [] # if weird things happen, this list will show potential errors
 
 # for each in uml list:
     # if first 4 = "class" and ends in {:
-        # create new object with className (use same variable to clear prev object)
+        # create new object with className (use same variable to reset prev object)
     # if +, obj.addToPublic(uml[current])
     # if -, obj.addToPrivate(uml[current])
     # if neither, obj.addToPrivate(uml[current]) and add message to noteList
