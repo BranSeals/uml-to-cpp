@@ -25,11 +25,28 @@ noteList = [] # if weird things happen, this list will show potential errors
 class UmlClass:
     def __init__(self, className):
         self.name = className
-        self.cpp = [] # will contain final implementation file
         self.functions = [] # list of functions used to build cpp file
-        self.hppPrivate = []
-        self.hppPublic = []
-        self.hpp = [] # will contain final hpp template, built from hppPub, hppPriv
+        self.parameters = [] # to help in creating functions
+        self.hppPrivate = ["private:"]
+        self.hppPublic = ["public:"]
+        self.cpp = [ # will contain final version of cpp file
+            "// Copyright (C) 2016. All rights reserved.",
+            "// Created: ", # add creation date
+            "",
+            "#include \"" + self.name + ".hpp\"", 
+        ]
+        self.hpp = [ # will contain final version of hpp file
+            "// Copyright (C) 2016. All rights reserved.",
+            "// Created: ", # add creation date
+            "",
+            "#ifndef " + self.name + "_hpp", 
+            "#define " + self.name + "_hpp",
+            "",
+            "class " + self.name,
+            "{",
+            "};",
+            "#endif"
+        ] 
 
     def addToPublic(self, pubMember): # adds given string to public scope list
         self.hppPublic.append(pubMember)
