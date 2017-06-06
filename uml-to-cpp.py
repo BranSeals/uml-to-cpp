@@ -18,6 +18,7 @@ noteList = [] # if weird things happen, this list will show potential errors
     # if -, obj.addToPrivate(uml[current])
     # if neither, obj.addToPrivate(uml[current]) and add message to noteList
     # if }:
+        # obj.build()
         # create name.hpp file and write using hpp list
         # create name.cpp file and write using cpp list
 
@@ -36,18 +37,32 @@ class UmlClass:
     def addToPrivate(self, privMember): # adds given string to private scope list
         self.hppPrivate.append(privMember)
 
-    #def isFunction(): # looks for function syntax
+    #def isFunction(self): # looks for function syntax
                        # used when creating cpp file from hpp list
 
-    #def checkForLibs(): # include libraries for data types that need them
+    #def checkForLibs(self): # include libraries for data types that need them
 
-    #def formatFunc(): # formats function from hpp to cpp style
+    #def formatFunc(self): # formats function from hpp to cpp style
                        # also takes into account return type and variable names
 
-    #def buildHpp(): # builds hpp using information
+    #def buildHpp(self): # builds hpp using information
+        # insert "private:"
+        # for each in hppPrivate, insert after "private:
+        # insert "public:"
+        # for each in hppPublic, insert after "public:"
 
-    #def buildCpp(): # builds cpp using information
+    #def buildCpp(self): # builds cpp using information
+        # for each in hpp:
+            # if isFunction, append to function list
+        # for each in function list, append it to cpp using formatFunc()
 
-    #def build(): # overall build file function
-        #buildHpp()
-        #buildCpp()
+    def build(self):
+        buildHpp()
+        buildCpp()
+        checkForLibs()
+        # create file: self.name + ".hpp"
+        # write with self.hpp
+        # close file
+        # create file: self.name + ".cpp"
+        # write with self.cpp
+        # close file
