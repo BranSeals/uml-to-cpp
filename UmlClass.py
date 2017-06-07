@@ -98,7 +98,6 @@ class UmlClass:
 
     def indentHpp(self):
         indent = "    "
-        noIndent = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:"]
         for line in self.hpp:
             i = self.hpp.index(line)
             if self.isMember(line):
