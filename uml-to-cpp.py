@@ -83,8 +83,8 @@ class UmlClass:
     # Formats hpp list into proper .hpp syntax
     def formatHpp(self):
         self.moveReturnType()
-        self.includeLibs()
         self.addNamespace()
+        self.includeLibs()
         self.indentAndSemiColon()
 
     # Build and format hpp and cpp lists
