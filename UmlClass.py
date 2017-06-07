@@ -25,13 +25,15 @@ class UmlClass:
             "{",
             "};",
             "#endif"
-        ] 
+        ]
+
+    indent = "    "
 
     def addToPublic(self, pubMember): # adds given string to public scope list
-        self.hppPublic.append(pubMember)
+        self.hppPublic.append(self.indent + pubMember)
 
     def addToPrivate(self, privMember): # adds given string to private scope list
-        self.hppPrivate.append(privMember)
+        self.hppPrivate.append(self.indent + privMember)
 
     #def isFunction(self): # looks for function syntax
                            # used when creating cpp file from hpp list
@@ -41,7 +43,7 @@ class UmlClass:
     #def formatFunc(self): # formats function from hpp to cpp style
                            # also takes into account return type and variable names
 
-    #def buildHpp(self): # builds hpp using information
+    def buildHpp(self): # builds hpp using information
         # find index of "{" in hpp
         # for each in hppPublic, insert into hpp
         # for each in hppPrivate, insert into hpp
@@ -52,9 +54,9 @@ class UmlClass:
         # for each in function list, append it to cpp using formatFunc()
 
     def build(self):
-        buildHpp()
-        buildCpp()
-        checkForLibs()
+        self.buildHpp()
+        #self.buildCpp()
+        #checkForLibs()
         # TODO: verify() # makes sure each file is properly formatted
         # create file: self.name + ".hpp"
         # write with self.hpp
