@@ -159,7 +159,7 @@ class UmlClass:
             if line[:line.index(self.name)].strip() == "void":
                 return ""
             else:
-                return "return " + self.findReturnDefault(line) + ";"
+                return "\n" + self.indent + "return " + self.findReturnDefault(line) + ";"
         else:
             return ""
 
