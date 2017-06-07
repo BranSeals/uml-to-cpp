@@ -9,15 +9,19 @@ print("Create or modify C++ header and implementation files by plaintext UML.")
 umlFile = open("ExampleUML.txt", 'r')
 # TODO: check if file isn't too bonkers, and properly formatted
 
-uml = umlFile.read().splitlines() # pull UML into memory as string list, 1 line per element
+uml = umlFile.read().splitlines() # pull UML into memory, 1 line per element
 
-# for each in uml list:
-    # if first 4 = "class" and ends in {:
-        # create new object with className (will reset previous one)
-    # if +, obj.addToPublic(uml[current])
-    # if -, obj.addToPrivate(uml[current])
-    # if }:
-        # obj.build()
-        # create name.hpp file and write using hpp list
-        # create name.cpp file and write using cpp list
-    # if none of above, print error
+for line in uml:
+    if line[:5] == "class" and line[-1:] == "{":
+        obj = UmlClass(line[6:-2])
+    elif line[:1] == "+":
+        obj.addToPublic(line[1:])
+    elif line[:1] == "-":
+        obj.addToPrivate(line[1:])
+    elif line == "}":
+        obj.build()
+        filesCreated += 2
+    else:
+        print("> Syntax error in UML file")
+
+print("> " + str(filesCreated) + " files created")
