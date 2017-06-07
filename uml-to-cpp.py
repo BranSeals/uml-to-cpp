@@ -10,6 +10,7 @@ umlFile = open("ExampleUML.txt", 'r')
 # TODO: check if file isn't too bonkers, and properly formatted
 
 uml = umlFile.read().splitlines() # pull UML into memory, 1 line per element
+umlFile.close()
 filesCreated = 0
 
 for line in uml:
