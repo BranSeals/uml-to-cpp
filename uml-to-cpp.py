@@ -109,9 +109,12 @@ class UmlClass:
     def moveReturnType(self):
         for line in self.hpp:
             i = self.hpp.index(line)
-            if " : " in line:
-                line = line[line.index(":")+1:].strip() + " " + line[:line.index(":")].strip()
-                self.hpp[i] = line
+            if self.isMember(line):
+                if " : " in line:
+                    line = line[line.index(":")+1:].strip() + " " + line[:line.index(":")].strip()
+                else:
+                    line = "void " + line
+            self.hpp[i] = line
 
     # Checks if given string is a member function of data member
     # This determines if a line needs to be formatted or not
