@@ -2,9 +2,9 @@
 # Created: 2017-06-05
 from UmlClass import UmlClass
 
-print("== UML to CPP ==")
+print("[ UML to CPP ]")
 print("Create or modify C++ header and implementation files by plaintext UML.")
-
+print("> Attempting to create files...")
 #print("Enter a UML filename: ") # file import currently disabled
 umlFile = open("UML.txt", 'r')
 # TODO: check if file isn't too bonkers, and properly formatted
@@ -23,6 +23,8 @@ for line in uml:
     elif line == "}":
         obj.createFiles()
         filesCreated += 2
+    elif line == "":
+        continue
     else:
         print("> Syntax error in UML file")
 
