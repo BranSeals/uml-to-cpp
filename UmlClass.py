@@ -72,6 +72,16 @@ class UmlClass:
         self.buildCpp()
         self.indentHpp() # indent here for easier cpp building
 
+    def addNamespace(self):
+        for line in self.hpp:
+            i = self.hpp.index(line)
+            if "string" in line:
+                line = line.replace("string", "std::string", 1)
+                self.hpp[i] = line
+            if "vector" in line:
+                line = line.replace("vector", "std::vector", 1)
+                self.hpp[i] = line
+
     def moveReturnType(self):
         for line in self.hpp:
             i = self.hpp.index(line)
