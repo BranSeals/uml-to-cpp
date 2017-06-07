@@ -1,5 +1,6 @@
 # Copyright (C) 2017 Bran Seals. All rights reserved.
 # Created: 2017-06-06
+from datetime import date
 
 class UmlClass:
     def __init__(self, className):
@@ -8,13 +9,13 @@ class UmlClass:
         self.hppPublic = ["public:"]
         self.cpp = [ # will contain final version of cpp file
             "// Copyright (C) 2016. All rights reserved.",
-            "// Created: ", # add creation date
+            "// Created: " + str(date.today()),
             "",
             "#include \"" + self.name + ".hpp\"", 
         ]
         self.hpp = [ # will contain final version of hpp file
             "// Copyright (C) 2016. All rights reserved.",
-            "// Created: ", # add creation date
+            "// Created: " + str(date.today()),
             "",
             "#ifndef " + self.name + "_hpp", 
             "#define " + self.name + "_hpp",
@@ -117,22 +118,24 @@ class UmlClass:
         for line in self.cpp:
             i = self.cpp.index(line)
             if self.isMember(line):
-                
-                # Search and insert className::
-                splitLine = line.split()
-                for bit in splitLine:
-                    j = splitLine.index(bit)
-                    if "(" in bit:
-                        bit = self.name + "::" + bit
-                        splitLine[j] = bit
-                if len(splitLine) > 1:
-                    line = " ".join(splitLine)
-                else:
-                    line = "".join(splitLine)
-
+                line = self.insertClassName(line)
                 # Add function body
-                line = line + "\n{\n" + self.indent + "return;\n}\n"
+                line = "\n" + line + "\n{\n" + self.indent + "return;\n}"
                 self.cpp[i] = line
+
+    def insertClassName(self, line):
+        # Search and insert className::
+        splitLine = line.split()
+        for bit in splitLine:
+            j = splitLine.index(bit)
+            if "(" in bit:
+                bit = self.name + "::" + bit
+                splitLine[j] = bit
+        if len(splitLine) > 1:
+            line = " ".join(splitLine)
+        else:
+            line = "".join(splitLine)
+        return line
 
     def createFiles(self):
         self.build()
