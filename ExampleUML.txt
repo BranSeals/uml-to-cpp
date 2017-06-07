@@ -4,4 +4,6 @@ class Automobile {
 +refuel()
 -gas : int
 -speed : int
+-name : string
+-vec : vector<int>
 }

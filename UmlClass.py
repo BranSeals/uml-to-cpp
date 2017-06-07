@@ -38,7 +38,13 @@ class UmlClass:
         if "(" in line and ")" in line and "(C)" not in line:
             return True
 
-    #def checkForLibs(self): # include libraries for data types that need them
+    def includeLibs(self): # include libraries for data types that need them
+        for line in self.hpp:
+            if "string" in line:
+                self.hpp.insert(self.hpp.index("class " + self.name),
+                "#include <string>",
+                ""
+                )
 
     #def formatFunc(self): # formats function from hpp to cpp style
                            # also takes into account return type and variable names
@@ -58,8 +64,8 @@ class UmlClass:
     def build(self):
         self.buildHpp()
         #self.buildCpp()
-        #checkForLibs()
-        # TODO: verify() # makes sure each file is properly formatted
+        self.includeLibs()
+        # TODO: self.verify() # makes sure each file is properly formatted
 
         # Create .hpp
         self.hppFile = open(self.name + ".hpp", "w")
