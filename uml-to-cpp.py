@@ -2,22 +2,31 @@
 # Created: 2017-06-05
 from datetime import date
 
+# UmlClass translates plaintext UML file into .hpp and .cpp files
 class UmlClass:
+
+    # Initialize with these values to return to default .hpp/.cpp in loop
     def __init__(self, className):
         self.name = className
+
+        # List of private and public members
         self.hppPrivate = ["private:"]
         self.hppPublic = ["public:"]
-        self.cpp = [ # will contain final version of cpp file
+
+        # Starting .cpp template
+        self.cpp = [
             "// Copyright (C) 2016. All rights reserved.",
             "// Created: " + str(date.today()),
             "",
-            "#include \"" + self.name + ".hpp\"", 
+            "#include \"" + self.name + ".hpp\""
         ]
-        self.hpp = [ # will contain final version of hpp file
+
+        # Starting .hpp template
+        self.hpp = [
             "// Copyright (C) 2016. All rights reserved.",
             "// Created: " + str(date.today()),
             "",
-            "#ifndef " + self.name + "_hpp", 
+            "#ifndef " + self.name + "_hpp",
             "#define " + self.name + "_hpp",
             "",
             "class " + self.name,
@@ -26,25 +35,30 @@ class UmlClass:
             "#endif"
         ]
 
-    indent = "    " # soft tab size 4
+    # Soft tab size 4
+    indent = "    "
 
-    def addToPublic(self, pubMember): # adds given string to public scope list
+    # Adds a given string to public member list
+    def addToPublic(self, pubMember):
         self.hppPublic.append(pubMember)
 
-    def addToPrivate(self, privMember): # adds given string to private scope list
+    # Adds a given string to private member list
+    def addToPrivate(self, privMember):
         self.hppPrivate.append(privMember)
 
+    # Checks if given string is a member function
     def isFunction(self, line):
         if "(" in line and ")" in line and "(C)" not in line:
             return True
 
-    def includeLibs(self): # include libraries for data types that need them
-        
+    # Searches and includes libraries for data types that need them
+    # Requires namespace to be assigned before this function is called
+    def includeLibs(self):
+
         # Data types being searched
         stringFound = False
         vectorFound = False
 
-        # Search for types with required libraries
         for line in self.hpp:
             if "std::string" in line:
                 stringFound = True
@@ -59,25 +73,28 @@ class UmlClass:
         if stringFound or vectorFound:
             self.hpp[self.hpp.index("class " + self.name):1] = [""]
 
+    # Builds hpp using public and private member lists
     def buildHpp(self):
         # Insert public members after {, where class begins
         self.hpp[self.hpp.index("{")+1:1] = self.hppPublic
-
         # Insert private members after last public member
         self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
 
+    # Formats hpp list into proper .hpp syntax
     def formatHpp(self):
         self.moveReturnType()
         self.includeLibs()
         self.addNamespace()
         self.indentAndSemiColon()
 
+    # Build and format hpp and cpp lists
     def build(self):
         self.buildHpp()
         self.formatHpp()
         self.buildCpp()
         self.formatCpp()
 
+    # Adds std:: prefix to data types that require it
     def addNamespace(self):
         for line in self.hpp:
             i = self.hpp.index(line)
@@ -88,6 +105,7 @@ class UmlClass:
                 line = line.replace("vector", "std::vector", 1)
                 self.hpp[i] = line
 
+    # Swaps location of returned data type
     def moveReturnType(self):
         for line in self.hpp:
             i = self.hpp.index(line)
@@ -95,6 +113,8 @@ class UmlClass:
                 line = line[line.index(":")+1:].strip() + " " + line[:line.index(":")].strip()
                 self.hpp[i] = line
 
+    # Checks if given string is a member function of data member
+    # This determines if a line needs to be formatted or not
     def isMember(self, line):
         notMember = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:", "return"]
         if any(notM in line for notM in notMember) or line == "":
@@ -102,6 +122,7 @@ class UmlClass:
         else:
             return True
 
+    # Indents a member and adds semicolon at the end
     def indentAndSemiColon(self):
         for line in self.hpp:
             i = self.hpp.index(line)
@@ -109,11 +130,14 @@ class UmlClass:
                 line = self.indent + line + ";"
                 self.hpp[i] = line
 
+    # Builds cpp list using members in hpp list
+    # Copies member without indent and semicolon
     def buildCpp(self):
         for line in self.hpp:
             if (self.isFunction(line)):
                 self.cpp.append(line[len(self.indent):-1]) # remove indent and ;
 
+    # Adds class namespace and function body along with return statement (if needed)
     def formatCpp(self):
         for line in self.cpp:
             i = self.cpp.index(line)
@@ -123,6 +147,7 @@ class UmlClass:
                 line = "\n" + line + "\n{\n" + self.indent + self.insertReturnType(line) + "\n}"
                 self.cpp[i] = line
 
+    # Returns the return statement (if needed)
     def insertReturnType(self, line):
         line = line[:line.index("(")]
 
@@ -135,6 +160,8 @@ class UmlClass:
         else:
             return ""
 
+    # If there is a return type, inserts a default return value
+    # This will prevent compilation errors from the outset
     def findReturnDefault(self, line):
         line = line[:line.index(self.name)].strip()
 
@@ -150,6 +177,7 @@ class UmlClass:
         else:
             return ""
 
+    # Returns the class namespace used in the .cpp file
     def insertClassName(self, line):
         # Search and insert className::
         splitLine = line.split()
@@ -164,6 +192,7 @@ class UmlClass:
             line = "".join(splitLine)
         return line
 
+    # Builds hpp and cpp lists and creates all relevant files
     def createFiles(self):
         self.build()
 
