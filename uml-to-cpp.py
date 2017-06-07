@@ -4,11 +4,12 @@ from UmlClass import UmlClass
 
 print("== UML to CPP ==")
 print("Create or modify C++ header and implementation files by plaintext UML.")
+
 #print("Enter a UML filename: ") # file import currently disabled
-# check if file isn't too bonkers
-uml = [] # pull UML into memory as string list, 1 line per element
-# check if file is properly formatted
-# create blank object
+umlFile = open("ExampleUML.txt", 'r')
+# TODO: check if file isn't too bonkers, and properly formatted
+
+uml = umlFile.read().splitlines() # pull UML into memory as string list, 1 line per element
 
 # for each in uml list:
     # if first 4 = "class" and ends in {:

@@ -55,7 +55,7 @@ class UmlClass:
         buildHpp()
         buildCpp()
         checkForLibs()
-        #verify() # makes sure each file is properly formatted
+        # TODO: verify() # makes sure each file is properly formatted
         # create file: self.name + ".hpp"
         # write with self.hpp
         # close file
