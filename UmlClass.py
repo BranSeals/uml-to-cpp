@@ -39,12 +39,25 @@ class UmlClass:
             return True
 
     def includeLibs(self): # include libraries for data types that need them
+        
+        # Data types being searched
+        stringFound = False
+        vectorFound = False
+
+        # Search for types with required libraries
         for line in self.hpp:
             if "string" in line:
-                self.hpp.insert(self.hpp.index("class " + self.name),
-                "#include <string>",
-                ""
-                )
+                stringFound = True
+            if "vector" in line:
+                vectorFound = True
+
+        # Include libraries, along with extra space if found
+        if stringFound:
+            self.hpp[self.hpp.index("class " + self.name):1] = ["#include <string>"]
+        if vectorFound:
+            self.hpp[self.hpp.index("class " + self.name):1] = ["#include <vector>"]
+        if stringFound or vectorFound:
+            self.hpp[self.hpp.index("class " + self.name):1] = [""]
 
     #def formatFunc(self): # formats function from hpp to cpp style
                            # also takes into account return type and variable names
