@@ -120,8 +120,35 @@ class UmlClass:
             if self.isMember(line):
                 line = self.insertClassName(line)
                 # Add function body
-                line = "\n" + line + "\n{\n" + self.indent + "return;\n}"
+                line = "\n" + line + "\n{\n" + self.indent + self.insertReturnType(line) + "\n}"
                 self.cpp[i] = line
+
+    def insertReturnType(self, line):
+        line = line[:line.index("(")]
+
+        # If return type exists, construct a return statement
+        if len(line.split()) > 1:
+            if line[:line.index(self.name)].strip() == "void":
+                return ""
+            else:
+                return "return " + self.findReturnDefault(line)
+        else:
+            return ""
+
+    def findReturnDefault(self, line):
+        line = line[:line.index(self.name)].strip()
+
+        # Check for data types and return some default zero value
+        if line == "int" or line == "char" or line == "double" or line == "float" or line == "short":
+            return "0"
+        elif line == "std::string":
+            return "\"\""
+        elif line == "bool":
+            return "false"
+        elif line == "void":
+            return ""
+        else:
+            return ""
 
     def insertClassName(self, line):
         # Search and insert className::
