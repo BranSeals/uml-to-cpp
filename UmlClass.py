@@ -60,9 +60,15 @@ class UmlClass:
         #self.buildCpp()
         #checkForLibs()
         # TODO: verify() # makes sure each file is properly formatted
-        # create file: self.name + ".hpp"
-        # write with self.hpp
-        # close file
-        # create file: self.name + ".cpp"
-        # write with self.cpp
-        # close file
+
+        # Create .hpp
+        self.hppFile = open(self.name + ".hpp", "w")
+        for line in self.hpp:
+            self.hppFile.write(line + "\n")
+        self.hppFile.close()
+
+        # Create .cpp
+        self.cppFile = open(self.name + ".cpp", "w")
+        for line in self.cpp:
+            self.cppFile.write(line + "\n")
+        self.cppFile.close()
