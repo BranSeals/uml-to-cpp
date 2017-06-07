@@ -87,10 +87,6 @@ class UmlClass:
             i = self.hpp.index(line)
             if " : " in line:
                 line = line[line.index(":")+1:].strip() + " " + line[:line.index(":")].strip()
-                # Insert std:: for string and vector
-                if line[4:6] == "string":
-                    print("String found!")
-                    # insert std:: at beginning
                 self.hpp[i] = line
 
     def isMember(self, line):
