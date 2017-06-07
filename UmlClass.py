@@ -44,7 +44,9 @@ class UmlClass:
                            # also takes into account return type and variable names
 
     def buildHpp(self):
+        # add public members after {, where class begins
         self.hpp[self.hpp.index("{")+1:1] = self.hppPublic
+        # add private members after last public member
         self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
 
     #def buildCpp(self): # builds cpp using information
