@@ -64,6 +64,13 @@ class UmlClass:
         # Insert private members after last public member
         self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
 
+    def formatHpp(self):
+        self.moveReturnType()
+        self.includeLibs()
+        self.addNamespace()
+        self.indentHpp()
+        self.addSemiColons()
+
     def build(self):
         self.buildHpp()
         self.moveReturnType()
