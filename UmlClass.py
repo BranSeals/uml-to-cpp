@@ -95,7 +95,7 @@ class UmlClass:
                 self.hpp[i] = line
 
     def isMember(self, line):
-        notMember = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:"]
+        notMember = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:", "return"]
         if any(notM in line for notM in notMember) or line == "":
             return False
         else:
@@ -112,12 +112,27 @@ class UmlClass:
         for line in self.hpp:
             if (self.isFunction(line)):
                 self.cpp.append(line[len(self.indent):-1]) # remove indent and ;
-        # for each in function list, append it to cpp using formatFunc()
 
     def formatCpp(self):
-        #add name:: and {
-        #if return type exists, add it the line before last brace
-        #add }
+        for line in self.cpp:
+            i = self.cpp.index(line)
+            if self.isMember(line):
+                
+                # Search and insert className::
+                splitLine = line.split()
+                for bit in splitLine:
+                    j = splitLine.index(bit)
+                    if "(" in bit:
+                        bit = self.name + "::" + bit
+                        splitLine[j] = bit
+                if len(splitLine) > 1:
+                    line = " ".join(splitLine)
+                else:
+                    line = "".join(splitLine)
+
+                # Add function body
+                line = line + "\n{\n" + self.indent + "return;\n}\n"
+                self.cpp[i] = line
 
     def createFiles(self):
         self.build()
