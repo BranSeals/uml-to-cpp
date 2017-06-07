@@ -35,8 +35,9 @@ class UmlClass:
     def addToPrivate(self, privMember): # adds given string to private scope list
         self.hppPrivate.append(self.indent + privMember)
 
-    #def isFunction(self): # looks for function syntax
-                           # used when creating cpp file from hpp list
+    def isFunction(self, line):
+        if "(" in line and ")" in line and "(C)" not in line:
+            return True
 
     #def checkForLibs(self): # include libraries for data types that need them
 
@@ -49,7 +50,7 @@ class UmlClass:
         # add private members after last public member
         self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
 
-    #def buildCpp(self): # builds cpp using information
+    def buildCpp(self):
         # for each in hpp:
             # if isFunction, append to function list
         # for each in function list, append it to cpp using formatFunc()
