@@ -21,7 +21,7 @@ for line in uml:
     elif line[:1] == "-":
         obj.addToPrivate(line[1:])
     elif line == "}":
-        obj.build()
+        obj.createFiles()
         filesCreated += 2
     else:
         print("> Syntax error in UML file")

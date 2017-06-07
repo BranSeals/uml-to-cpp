@@ -26,13 +26,11 @@ class UmlClass:
             "#endif"
         ]
 
-    indent = "    "
-
     def addToPublic(self, pubMember): # adds given string to public scope list
-        self.hppPublic.append(self.indent + pubMember)
+        self.hppPublic.append(pubMember)
 
     def addToPrivate(self, privMember): # adds given string to private scope list
-        self.hppPrivate.append(self.indent + privMember)
+        self.hppPrivate.append(privMember)
 
     def isFunction(self, line):
         if "(" in line and ")" in line and "(C)" not in line:
@@ -46,9 +44,9 @@ class UmlClass:
 
         # Search for types with required libraries
         for line in self.hpp:
-            if "string" in line:
+            if "std::string" in line:
                 stringFound = True
-            if "vector" in line:
+            if "std::vector" in line:
                 vectorFound = True
 
         # Include libraries, along with extra space if found
@@ -59,33 +57,56 @@ class UmlClass:
         if stringFound or vectorFound:
             self.hpp[self.hpp.index("class " + self.name):1] = [""]
 
-    #def formatFunc(self): # formats function from hpp to cpp style
-                           # also takes into account return type and variable names
-
     def buildHpp(self):
-        # add public members after {, where class begins
+        # Insert public members after {, where class begins
         self.hpp[self.hpp.index("{")+1:1] = self.hppPublic
-        # add private members after last public member
-        self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
-        self.formatHpp()
 
-    #def formatHpp(self):
-        # for each line:
-            # if line has ":":
-                # take everything after : and remove whitespace
-                # insert with one space afterwards in front of line 
-        # add std:: to string and vector
+        # Insert private members after last public member
+        self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
+
+    def build(self):
+        self.buildHpp()
+        self.moveReturnType()
+        self.includeLibs()
+        self.addNamespace()
+        self.buildCpp()
+        self.indentHpp() # indent here for easier cpp building
+
+    def moveReturnType(self):
+        for line in self.hpp:
+            i = self.hpp.index(line)
+            if " : " in line:
+                line = line[line.index(":")+1:].strip() + " " + line[:line.index(":")].strip()
+                # Insert std:: for string and vector
+                if line[4:6] == "string":
+                    print("String found!")
+                    # insert std:: at beginning
+                self.hpp[i] = line
+
+    def isMember(self, line):
+        notMember = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:"]
+        if any(notM in line for notM in notMember) or line == "":
+            return False
+        else:
+            return True
+
+    def indentHpp(self):
+        indent = "    "
+        noIndent = ["/", "#", "class ", "{", "}", "public:", "private:", "protected:"]
+        for line in self.hpp:
+            i = self.hpp.index(line)
+            if self.isMember(line):
+                line = indent + line
+                self.hpp[i] = line
 
     def buildCpp(self):
         for line in self.hpp:
             if (self.isFunction(line)):
-                self.functions.append(line[4:])
+                self.functions.append(line)
         # for each in function list, append it to cpp using formatFunc()
 
-    def build(self):
-        self.buildHpp()
-        #self.buildCpp()
-        self.includeLibs()
+    def createFiles(self):
+        self.build()
 
         # Create .hpp
         self.hppFile = open(self.name + ".hpp", "w")
