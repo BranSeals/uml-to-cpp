@@ -43,10 +43,9 @@ class UmlClass:
     #def formatFunc(self): # formats function from hpp to cpp style
                            # also takes into account return type and variable names
 
-    def buildHpp(self): # builds hpp using information
-        # find index of "{" in hpp
-        # for each in hppPublic, insert into hpp
-        # for each in hppPrivate, insert into hpp
+    def buildHpp(self):
+        self.hpp[self.hpp.index("{")+1:1] = self.hppPublic
+        self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
 
     #def buildCpp(self): # builds cpp using information
         # for each in hpp:
