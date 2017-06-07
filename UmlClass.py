@@ -73,11 +73,8 @@ class UmlClass:
 
     def build(self):
         self.buildHpp()
-        self.moveReturnType()
-        self.includeLibs()
-        self.addNamespace()
+        self.formatHpp()
         self.buildCpp()
-        self.indentHpp() # indent here for easier cpp building
 
     def addSemiColons(self):
         for line in self.hpp:
