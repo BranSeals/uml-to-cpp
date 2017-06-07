@@ -1,9 +1,19 @@
 class Automobile {
-+accelerate()
++accelerate(int, int)
 +brake()
 +refuel()
++getGas() : int
++getName() : string
++setName(string) : void
 -gas : int
 -speed : int
 -name : string
 -vec : vector<int>
+}
+
+class Animal {
++sound() : string
++move(void) : void
+-name : string
+-age : int
 }
