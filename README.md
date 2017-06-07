@@ -23,6 +23,8 @@ class MyClass {
 
 Default constructors and destructors do not have to be specified, and are taken into account to avoid duplicates if included. If parameter names exist, they will be included in the final code files. Currently, relationships and inheritance are not supported.
 
+ExampleUML.txt is included with the project to experiment with the UML import and translation. More classes and weirder structures will be added as the project progresses.
+
 ## Author
 
 My name is Bran Seals and I am recent Computer Science graduate (AS) based in Columbus, Indiana. I have an interest in most everything, consider myself a lifelong learner, and enjoy being well-rounded.

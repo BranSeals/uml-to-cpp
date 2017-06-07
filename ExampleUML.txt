@@ -1,7 +1,0 @@
-class Automobile {
-+accelerate()
-+brake()
-+refuel()
--gas : int
--speed : int
-}
