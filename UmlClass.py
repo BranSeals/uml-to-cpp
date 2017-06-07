@@ -26,6 +26,8 @@ class UmlClass:
             "#endif"
         ]
 
+    indent = "    " # soft tab size 4
+
     def addToPublic(self, pubMember): # adds given string to public scope list
         self.hppPublic.append(pubMember)
 
@@ -68,20 +70,13 @@ class UmlClass:
         self.moveReturnType()
         self.includeLibs()
         self.addNamespace()
-        self.indentHpp()
-        self.addSemiColons()
+        self.indentAndSemiColon()
 
     def build(self):
         self.buildHpp()
         self.formatHpp()
         self.buildCpp()
-
-    def addSemiColons(self):
-        for line in self.hpp:
-            i = self.hpp.index(line)
-            if self.isMember(line):
-                line = line + ";"
-                self.hpp[i] = line
+        self.formatCpp()
 
     def addNamespace(self):
         for line in self.hpp:
@@ -107,19 +102,23 @@ class UmlClass:
         else:
             return True
 
-    def indentHpp(self):
-        indent = "    "
+    def indentAndSemiColon(self):
         for line in self.hpp:
             i = self.hpp.index(line)
             if self.isMember(line):
-                line = indent + line
+                line = self.indent + line + ";"
                 self.hpp[i] = line
 
     def buildCpp(self):
         for line in self.hpp:
             if (self.isFunction(line)):
-                self.functions.append(line)
+                self.functions.append(line[len(self.indent):-1]) # remove indent and ;
         # for each in function list, append it to cpp using formatFunc()
+
+    def formatCpp(self):
+        #add name:: and {
+        #if return type exists, add it the line before last brace
+        #add }
 
     def createFiles(self):
         self.build()
