@@ -4,7 +4,6 @@
 class UmlClass:
     def __init__(self, className):
         self.name = className
-        self.functions = [] # list of functions used to build cpp file
         self.hppPrivate = ["private:"]
         self.hppPublic = ["public:"]
         self.cpp = [ # will contain final version of cpp file
@@ -112,7 +111,7 @@ class UmlClass:
     def buildCpp(self):
         for line in self.hpp:
             if (self.isFunction(line)):
-                self.functions.append(line[len(self.indent):-1]) # remove indent and ;
+                self.cpp.append(line[len(self.indent):-1]) # remove indent and ;
         # for each in function list, append it to cpp using formatFunc()
 
     def formatCpp(self):
