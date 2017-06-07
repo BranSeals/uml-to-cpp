@@ -67,6 +67,14 @@ class UmlClass:
         self.hpp[self.hpp.index("{")+1:1] = self.hppPublic
         # add private members after last public member
         self.hpp[self.hpp.index(self.hppPublic[-1])+1:1] = self.hppPrivate
+        self.formatHpp()
+
+    #def formatHpp(self):
+        # for each line:
+            # if line has ":":
+                # take everything after : and remove whitespace
+                # insert with one space afterwards in front of line 
+        # add std:: to string and vector
 
     def buildCpp(self):
         for line in self.hpp:
@@ -78,7 +86,6 @@ class UmlClass:
         self.buildHpp()
         #self.buildCpp()
         self.includeLibs()
-        # TODO: self.verify() # makes sure each file is properly formatted
 
         # Create .hpp
         self.hppFile = open(self.name + ".hpp", "w")
