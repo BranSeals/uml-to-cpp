@@ -8,6 +8,8 @@ This project takes a plaintext UML file as input and uses it to create .hpp and 
 
 The format of the plaintext UML file matches [PlantText](https://www.planttext.com/) as I use this for my personal projects, but this formatting is subject to change as more features are added to this project.
 
+(test remote)
+
 ## Status
 
 Currently, this project is able to create C++ header and implementation files for each class in the plaintext UML.txt file. Not all containers and data types are supported, but most are. Files contain proper C++ syntax and avoid compilation errors at the outset, unless more complex containers and data types are being used. 
