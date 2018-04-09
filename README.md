@@ -8,7 +8,7 @@ This project takes a plaintext UML file as input and uses it to create .hpp and 
 
 The format of the plaintext UML file matches [PlantText](https://www.planttext.com/) as I use this for my personal projects, but this formatting is subject to change as more features are added to this project.
 
-(test remote)
+This project is not currently being developed or maintained.
 
 ## Status
 
